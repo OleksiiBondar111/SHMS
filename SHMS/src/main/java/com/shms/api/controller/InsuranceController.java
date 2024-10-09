@@ -36,8 +36,7 @@ public class InsuranceController {
     @ResponseStatus(HttpStatus.CREATED)
     public InsuranceDTO create(@Parameter(description = "Details of the insurance to be created", required = true)
                                @RequestBody @Valid InsuranceDTO insuranceDTO) {
-       String name = null;
-       name.length();
+
         return insuranceMapper.map(insuranceService.create(insuranceDTO));
     }
 
