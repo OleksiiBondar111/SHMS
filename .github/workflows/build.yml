@@ -61,7 +61,7 @@ jobs:
             ${{ runner.os }}-gradle
 
       - name: Grant execute permission to gradlew
-        run: chmod +x ./SHMS/gradlew
+        run: chmod +x ./SHMS/SHMS/gradlew
 
       - name: Run SonarCloud Scan for SHMS
         run: ./SHMS/SHMS/gradlew sonar
