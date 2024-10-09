@@ -64,7 +64,7 @@ jobs:
         run: chmod +x ./SHMS/gradlew
 
       - name: Run SonarCloud Scan for SHMS
-        run: ./SHMS/gradlew sonar
+        run: ./gradlew sonar
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
