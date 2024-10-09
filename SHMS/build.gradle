@@ -25,6 +25,7 @@ sonar {
     property "sonar.projectKey", "OleksiiBondar111_SHMS"
     property "sonar.organization", "oleksiibondar111"
     property "sonar.host.url", "https://sonarcloud.io"
+      property "sonar.projectName", "SHMS"
   }
 }
 
