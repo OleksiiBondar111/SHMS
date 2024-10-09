@@ -11,13 +11,12 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class InsuranceDTO extends EntityDTO {
 
-    @NotNull
+    @NotNull(message = "Provider name cannot be null")
     private String providerName;
 
-    @NotNull
+    @NotNull(message = "Policy number cannot be null")
     private String policyNumber;
 
-    @NotNull
     private String coverageDetails;
 
     public InsuranceDTO(Insurance insurance) {

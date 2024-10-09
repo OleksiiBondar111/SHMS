@@ -14,31 +14,31 @@ import java.util.Objects;
 @NoArgsConstructor
 @ToString(of = {"id"})
 @MappedSuperclass
-public abstract class IdEntity  {
+public abstract class IdEntity extends Entity {
 
-  @Id
-  @GeneratedValue(generator = "system-uuid", strategy = GenerationType.IDENTITY)
-  @GenericGenerator(name = "system-uuid", strategy = "uuid")
-  @Column(name = "id", nullable = false, updatable = false)
-  protected String id;
+    @Id
+    @GeneratedValue(generator = "system-uuid", strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "id", nullable = false, updatable = false)
+    protected String id;
 
-  public IdEntity(String id) {
-    this.id = id;
-  }
+    public IdEntity(String id) {
+        this.id = id;
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof IdEntity)) return false;
+        if (!(o instanceof IdEntity)) return false;
 
-    IdEntity that = (IdEntity) o;
+        IdEntity that = (IdEntity) o;
 
-    return this.id != null && Objects.equals(this.id, that.id);
-  }
+        return this.id != null && Objects.equals(this.id, that.id);
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id);
-  }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

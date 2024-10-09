@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.1.6'
+    id "org.sonarqube" version "5.1.0.4882"
 }
 
 group = 'com.shms.api'
@@ -19,6 +20,13 @@ compileJava {
     ]
 }
 
+sonar {
+  properties {
+    property "sonar.projectKey", "OleksiiBondar111_SHMS"
+    property "sonar.organization", "oleksiibondar111"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
+}
 
 
 repositories {
@@ -39,10 +47,10 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.flywaydb:flyway-database-postgresql'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-    
-    implementation  'org.mapstruct:mapstruct:1.6.2'
-    annotationProcessor  'org.mapstruct:mapstruct-processor:1.6.2'
-   
+
+    implementation 'org.mapstruct:mapstruct:1.6.2'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.2'
+
     implementation 'org.projectlombok:lombok-mapstruct-binding:0.1.0'
 
 
@@ -52,6 +60,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.h2database:h2'
+    testImplementation 'org.mockito:mockito-core:5.3.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 }
