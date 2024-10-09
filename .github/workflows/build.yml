@@ -35,7 +35,7 @@ jobs:
         run: chmod +x ./SHMS/gradlew
 
       - name: Build SHMS with Gradle
-        run: ./SHMS/gradlew clean build --project-dir=SHMS
+        run: ./SHMS/gradlew clean build
 
   sonarcloud:
     name: SonarCloud Analysis for SHMS
