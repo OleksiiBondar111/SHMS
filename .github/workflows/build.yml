@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build Project1
+    name: Build SHMS
     runs-on: ubuntu-latest
 
     steps:
@@ -34,11 +34,11 @@ jobs:
       - name: Grant execute permission to gradlew
         run: chmod +x ./SHMS/gradlew
 
-      - name: Build Project1 with Gradle
+      - name: Build SHMS with Gradle
         run: ./SHMS/gradlew clean build --project-dir=SHMS
 
   sonarcloud:
-    name: SonarCloud Analysis for Project1
+    name: SonarCloud Analysis for SHMS
     runs-on: ubuntu-latest
     needs: build
 
@@ -63,8 +63,8 @@ jobs:
       - name: Grant execute permission to gradlew
         run: chmod +x ./SHMS/gradlew
 
-      - name: Run SonarCloud Scan for Project1
-        run: ./SHMS/gradlew sonarqube --project-dir=SHMS
+      - name: Run SonarCloud Scan for SHMS
+        run: ./SHMS/gradlew sonar --project-dir=SHMS
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

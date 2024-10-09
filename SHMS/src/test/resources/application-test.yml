@@ -62,6 +62,7 @@ logging:
     # com:
     #   netflix:
     #     discovery: DEBUG
-
-
+eureka:
+  client:
+    enabled: false
 
