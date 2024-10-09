@@ -20,15 +20,6 @@ compileJava {
     ]
 }
 
-sonar   {
-  properties {
-    property "sonar.projectKey", "OleksiiBondar111_SHMS"
-    property "sonar.organization", "oleksiibondar111"
-    property "sonar.host.url", "https://sonarcloud.io"
-    property "sonar.projectName", "SHMS"
-  }
-}
-
 
 repositories {
     mavenCentral()
@@ -76,4 +67,14 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+sonar   {
+  properties {
+    property "sonar.projectKey", "OleksiiBondar111_SHMS"
+    property "sonar.organization", "oleksiibondar111"
+    property "sonar.host.url", "https://sonarcloud.io"
+    property "sonar.projectName", "SHMS"
+    property "sonar.java.binaries", layout.buildDirectory.dir("classes/java/main").get().asFile.absolutePath
+  }
 }
