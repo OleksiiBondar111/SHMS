@@ -20,12 +20,13 @@ compileJava {
     ]
 }
 
-sonar {
+sonar   {
   properties {
+    property "sonar.java.binaries", file("build/classes/java/main").absolutePath
     property "sonar.projectKey", "OleksiiBondar111_SHMS"
     property "sonar.organization", "oleksiibondar111"
     property "sonar.host.url", "https://sonarcloud.io"
-      property "sonar.projectName", "SHMS"
+    property "sonar.projectName", "SHMS"
   }
 }
 
