@@ -2,14 +2,15 @@ package com.shms.api.controller;
 
 
 import com.shms.api.dao.insurance.InsuranceRepository;
-import com.shms.api.dto.InsuranceDTO;
+import com.shms.api.dto.insurance.InsuranceDTO;
 import com.shms.api.mapper.InsuranceMapper;
-import com.shms.api.model.Insurance;
+import com.shms.api.model.insurance.Insurance;
 import com.shms.api.service.InsuranceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/insurance")
+@RequestMapping("/api/insurance")
+@Tag(name = "Insurance")
 public class InsuranceController {
 
     private final InsuranceMapper insuranceMapper;

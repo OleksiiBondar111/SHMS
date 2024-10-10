@@ -2,6 +2,7 @@ CREATE TABLE public.test_results
 (
     id          character varying(32) NOT NULL PRIMARY KEY,
     record_id   character varying(32) REFERENCES public.medical_records (id) ON DELETE SET NULL,
+    deleted     timestamp without time zone,
     created     timestamp without time zone,
     modified    timestamp without time zone,
     test_date   timestamp without time zone,

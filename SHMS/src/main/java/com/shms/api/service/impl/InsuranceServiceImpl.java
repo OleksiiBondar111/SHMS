@@ -2,9 +2,9 @@ package com.shms.api.service.impl;
 
 
 import com.shms.api.dao.insurance.InsuranceRepository;
-import com.shms.api.dto.InsuranceDTO;
+import com.shms.api.dto.insurance.InsuranceDTO;
 import com.shms.api.exception.ResourceNotFoundException;
-import com.shms.api.model.Insurance;
+import com.shms.api.model.insurance.Insurance;
 import com.shms.api.service.InsuranceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

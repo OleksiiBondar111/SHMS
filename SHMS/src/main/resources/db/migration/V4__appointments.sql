@@ -7,5 +7,6 @@ CREATE TABLE public.appointments
     patient_id       character varying(32) REFERENCES public.patients (id) ON DELETE SET NULL,
     doctor_id        character varying(32) REFERENCES public.doctors (id) ON DELETE SET NULL,
     appointment_date timestamp without time zone,
+    reason           character varying(255),
     status           character varying(32) DEFAULT 'pending'::character varying
 );

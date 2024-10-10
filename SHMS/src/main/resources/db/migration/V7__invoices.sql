@@ -7,7 +7,7 @@ CREATE TABLE public.invoices
     patient_id     character varying(32) REFERENCES public.patients (id) ON DELETE SET NULL,
     appointment_id character varying(32) REFERENCES public.appointments (id) ON DELETE SET NULL,
     total_amount   decimal(10, 2),
-    status         character varying(1),
+    status         character varying(32),
     issue_date     timestamp without time zone,
     due_date       timestamp without time zone
 );

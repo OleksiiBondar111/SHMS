@@ -1,7 +1,7 @@
 package com.shms.api.dao.insurance;
 
 import com.shms.api.dao.SoftDeleteJpaRepository;
-import com.shms.api.model.Insurance;
+import com.shms.api.model.insurance.Insurance;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.shms.api.mapper;
 
-import com.shms.api.dto.InsuranceDTO;
-import com.shms.api.model.Insurance;
+import com.shms.api.dto.insurance.InsuranceDTO;
+import com.shms.api.model.insurance.Insurance;
 import org.mapstruct.Mapper;
 
 import java.util.List;

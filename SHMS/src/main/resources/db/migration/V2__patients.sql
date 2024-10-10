@@ -4,6 +4,7 @@ CREATE TABLE public.patients
     deleted      timestamp without time zone,
     created      timestamp without time zone,
     modified     timestamp without time zone,
+    dob          timestamp without time zone,
     email        character varying(64)  NOT NULL,
     gender       character varying(1) DEFAULT 'M'::character varying,
     first_name   character varying(32)  NOT NULL,
