@@ -5,7 +5,7 @@ import com.shms.api.dao.medicalRecord.MedicalRecordRepository;
 import com.shms.api.dto.medicalRecord.MedicalRecordDTO;
 import com.shms.api.mapper.MedicalRecordMapper;
 import com.shms.api.model.medicalRecord.MedicalRecord;
-import com.shms.api.service.MedicalRecordService;
+import com.shms.api.service.EntityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,7 +25,7 @@ import java.util.List;
 public class MedicalRecordController {
 
     private final MedicalRecordMapper medicalRecordMapper;
-    private final MedicalRecordService medicalRecordService;
+    private final EntityService<MedicalRecord, MedicalRecordDTO> medicalRecordService;
     private final MedicalRecordRepository medicalRecordRepository;
 
     @Operation(summary = "Create a new medicalRecord", description = "Creates a new medicalRecord in the system and returns the created medicalRecord object.")
@@ -37,8 +37,8 @@ public class MedicalRecordController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MedicalRecordDTO create(@Parameter(description = "Details of the medicalRecord to be created", required = true)
-                                 @RequestBody @Valid MedicalRecordDTO medicalRecordDTO) {
-        return medicalRecordMapper.map(medicalRecordService.create(medicalRecordDTO));
+                                   @RequestBody @Valid MedicalRecordDTO medicalRecordDTO) {
+        return medicalRecordMapper.toDto(medicalRecordService.create(medicalRecordDTO));
     }
 
     @Operation(
@@ -94,7 +94,7 @@ public class MedicalRecordController {
     })
     @GetMapping("/{id}")
     public MedicalRecordDTO getById(@PathVariable("id") String id) {
-        return medicalRecordMapper.map(medicalRecordService.getById(id));
+        return medicalRecordMapper.toDto(medicalRecordService.getById(id));
     }
 
 }

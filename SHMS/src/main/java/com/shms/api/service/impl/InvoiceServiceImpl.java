@@ -1,24 +1,24 @@
 package com.shms.api.service.impl;
 
 import com.shms.api.dao.invoice.InvoiceRepository;
+import com.shms.api.dto.appointment.AppointmentDTO;
 import com.shms.api.dto.invoice.InvoiceDTO;
+import com.shms.api.dto.patient.PatientDTO;
 import com.shms.api.exception.ResourceNotFoundException;
 import com.shms.api.model.appointemnt.Appointment;
 import com.shms.api.model.invoice.Invoice;
 import com.shms.api.model.patient.Patient;
-import com.shms.api.service.AppointmentService;
-import com.shms.api.service.InvoiceService;
-import com.shms.api.service.PatientService;
+import com.shms.api.service.EntityService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class InvoiceServiceImpl implements InvoiceService {
+public class InvoiceServiceImpl implements EntityService<Invoice, InvoiceDTO> {
 
     private final InvoiceRepository invoiceRepository;
-    private final PatientService patientService;
-    private final AppointmentService appointmentService;
+    private final EntityService<Patient, PatientDTO> patientService;
+    private final EntityService<Appointment, AppointmentDTO> appointmentService;
 
     @Override
     public Invoice create(InvoiceDTO invoiceDTO) {

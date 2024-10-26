@@ -5,7 +5,7 @@ import com.shms.api.dao.invoice.InvoiceRepository;
 import com.shms.api.dto.invoice.InvoiceDTO;
 import com.shms.api.mapper.InvoiceMapper;
 import com.shms.api.model.invoice.Invoice;
-import com.shms.api.service.InvoiceService;
+import com.shms.api.service.EntityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,7 +25,7 @@ import java.util.List;
 public class InvoiceController {
 
     private final InvoiceMapper invoiceMapper;
-    private final InvoiceService invoiceService;
+    private final EntityService<Invoice, InvoiceDTO> invoiceService;
     private final InvoiceRepository invoiceRepository;
 
     @Operation(summary = "Create a new invoice", description = "Creates a new invoice in the system and returns the created invoice object.")
@@ -37,8 +37,8 @@ public class InvoiceController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public InvoiceDTO create(@Parameter(description = "Details of the invoice to be created", required = true)
-                                 @RequestBody @Valid InvoiceDTO invoiceDTO) {
-        return invoiceMapper.map(invoiceService.create(invoiceDTO));
+                             @RequestBody @Valid InvoiceDTO invoiceDTO) {
+        return invoiceMapper.toDto(invoiceService.create(invoiceDTO));
     }
 
     @Operation(
@@ -94,7 +94,7 @@ public class InvoiceController {
     })
     @GetMapping("/{id}")
     public InvoiceDTO getById(@PathVariable("id") String id) {
-        return invoiceMapper.map(invoiceService.getById(id));
+        return invoiceMapper.toDto(invoiceService.getById(id));
     }
 
 }

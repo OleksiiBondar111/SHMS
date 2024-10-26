@@ -9,6 +9,7 @@ import com.shms.api.exception.ResourceNotFoundException;
 import com.shms.api.model.doctor.Doctor;
 import com.shms.api.model.medicalRecord.MedicalRecord;
 import com.shms.api.model.patient.Patient;
+import com.shms.api.service.EntityService;
 import com.shms.api.service.MedicalRecordService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class MedicalRecordServiceImpl implements MedicalRecordService {
+public class MedicalRecordServiceImpl implements EntityService<MedicalRecord, MedicalRecordDTO> {
 
     private final MedicalRecordRepository medicalRecordRepository;
     private final PatientRepository patientRepository;

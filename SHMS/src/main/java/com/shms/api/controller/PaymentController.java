@@ -5,7 +5,7 @@ import com.shms.api.dao.payment.PaymentRepository;
 import com.shms.api.dto.payment.PaymentDTO;
 import com.shms.api.mapper.PaymentMapper;
 import com.shms.api.model.payment.Payment;
-import com.shms.api.service.PaymentService;
+import com.shms.api.service.EntityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,7 +25,7 @@ import java.util.List;
 public class PaymentController {
 
     private final PaymentMapper paymentMapper;
-    private final PaymentService paymentService;
+    private final EntityService<Payment, PaymentDTO> paymentService;
     private final PaymentRepository paymentRepository;
 
     @Operation(summary = "Create a new payment", description = "Creates a new payment in the system and returns the created payment object.")
@@ -37,8 +37,8 @@ public class PaymentController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PaymentDTO create(@Parameter(description = "Details of the payment to be created", required = true)
-                                 @RequestBody @Valid PaymentDTO paymentDTO) {
-        return paymentMapper.map(paymentService.create(paymentDTO));
+                             @RequestBody @Valid PaymentDTO paymentDTO) {
+        return paymentMapper.toDto(paymentService.create(paymentDTO));
     }
 
     @Operation(
@@ -94,7 +94,7 @@ public class PaymentController {
     })
     @GetMapping("/{id}")
     public PaymentDTO getById(@PathVariable("id") String id) {
-        return paymentMapper.map(paymentService.getById(id));
+        return paymentMapper.toDto(paymentService.getById(id));
     }
 
 }

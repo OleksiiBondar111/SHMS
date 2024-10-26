@@ -38,6 +38,11 @@ spring:
       requestTimeout: 150000
   main:
     allowCircularReferences: true
+  sleuth:
+    annotation:
+      enabled: true
+      sampler:
+        probability: 1.0
 
 server:
   port: ${APPLICATION_PORT}
@@ -61,6 +66,9 @@ logging:
     # com:
     #   netflix:
     #     discovery: DEBUG
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 
-
-
+data:
+  seed:
+    enabled: false

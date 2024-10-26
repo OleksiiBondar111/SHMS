@@ -1,21 +1,21 @@
 package com.shms.api.service.impl;
 
 import com.shms.api.dao.testResults.TestResultRepository;
+import com.shms.api.dto.medicalRecord.MedicalRecordDTO;
 import com.shms.api.dto.testResults.TestResultDTO;
 import com.shms.api.exception.ResourceNotFoundException;
 import com.shms.api.model.medicalRecord.MedicalRecord;
 import com.shms.api.model.testResult.TestResult;
-import com.shms.api.service.MedicalRecordService;
-import com.shms.api.service.TestResultService;
+import com.shms.api.service.EntityService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class TestResultServiceImpl implements TestResultService {
+public class TestResultServiceImpl implements EntityService<TestResult,TestResultDTO> {
 
     private final TestResultRepository testResultRepository;
-    private final MedicalRecordService medicalRecordService;
+    private final EntityService<MedicalRecord, MedicalRecordDTO> medicalRecordService;
 
     @Override
     public TestResult create(TestResultDTO testResultDTO) {

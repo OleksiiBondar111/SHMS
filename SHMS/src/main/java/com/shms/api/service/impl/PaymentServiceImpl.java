@@ -1,21 +1,21 @@
 package com.shms.api.service.impl;
 
 import com.shms.api.dao.payment.PaymentRepository;
+import com.shms.api.dto.invoice.InvoiceDTO;
 import com.shms.api.dto.payment.PaymentDTO;
 import com.shms.api.exception.ResourceNotFoundException;
 import com.shms.api.model.invoice.Invoice;
 import com.shms.api.model.payment.Payment;
-import com.shms.api.service.InvoiceService;
-import com.shms.api.service.PaymentService;
+import com.shms.api.service.EntityService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class PaymentServiceImpl implements PaymentService {
+public class PaymentServiceImpl implements EntityService<Payment, PaymentDTO> {
 
     private final PaymentRepository paymentRepository;
-    private final InvoiceService invoiceService;
+    private final EntityService<Invoice, InvoiceDTO> invoiceService;
 
     @Override
     public Payment create(PaymentDTO paymentDTO) {

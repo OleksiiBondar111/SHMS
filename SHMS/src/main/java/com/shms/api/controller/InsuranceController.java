@@ -5,7 +5,7 @@ import com.shms.api.dao.insurance.InsuranceRepository;
 import com.shms.api.dto.insurance.InsuranceDTO;
 import com.shms.api.mapper.InsuranceMapper;
 import com.shms.api.model.insurance.Insurance;
-import com.shms.api.service.InsuranceService;
+import com.shms.api.service.EntityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,7 +25,7 @@ import java.util.List;
 public class InsuranceController {
 
     private final InsuranceMapper insuranceMapper;
-    private final InsuranceService insuranceService;
+    private final EntityService<Insurance, InsuranceDTO> insuranceService;
     private final InsuranceRepository insuranceRepository;
 
     @Operation(summary = "Create a new insurance", description = "Creates a new insurance in the system and returns the created insurance object.")
@@ -39,7 +39,7 @@ public class InsuranceController {
     public InsuranceDTO create(@Parameter(description = "Details of the insurance to be created", required = true)
                                @RequestBody @Valid InsuranceDTO insuranceDTO) {
 
-        return insuranceMapper.map(insuranceService.create(insuranceDTO));
+        return insuranceMapper.toDto(insuranceService.create(insuranceDTO));
     }
 
     @Operation(

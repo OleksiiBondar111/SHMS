@@ -4,8 +4,10 @@ package com.shms.api.controller;
 import com.shms.api.dao.appointment.AppointmentRepository;
 import com.shms.api.dto.appointment.AppointmentDTO;
 import com.shms.api.mapper.AppointmentMapper;
+import com.shms.api.mapper.EntityMapper;
 import com.shms.api.model.appointemnt.Appointment;
 import com.shms.api.service.AppointmentService;
+import com.shms.api.service.EntityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,7 +27,7 @@ import java.util.List;
 public class AppointmentController {
 
     private final AppointmentMapper appointmentMapper;
-    private final AppointmentService appointmentService;
+    private final EntityService<Appointment, AppointmentDTO> appointmentService;
     private final AppointmentRepository appointmentRepository;
 
     @Operation(summary = "Create a new appointment", description = "Creates a new appointment in the system and returns the created appointment object.")
@@ -38,7 +40,7 @@ public class AppointmentController {
     @ResponseStatus(HttpStatus.CREATED)
     public AppointmentDTO create(@Parameter(description = "Details of the appointment to be created", required = true)
                                  @RequestBody @Valid AppointmentDTO appointmentDTO) {
-        return appointmentMapper.map(appointmentService.create(appointmentDTO));
+        return appointmentMapper.toDto(appointmentService.create(appointmentDTO));
     }
 
     @Operation(
@@ -94,7 +96,7 @@ public class AppointmentController {
     })
     @GetMapping("/{id}")
     public AppointmentDTO getById(@PathVariable("id") String id) {
-        return appointmentMapper.map(appointmentService.getById(id));
+        return appointmentMapper.toDto(appointmentService.getById(id));
     }
 
 }

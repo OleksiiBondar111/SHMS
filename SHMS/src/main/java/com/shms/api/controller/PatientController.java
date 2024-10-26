@@ -5,7 +5,7 @@ import com.shms.api.dao.patient.PatientRepository;
 import com.shms.api.dto.patient.PatientDTO;
 import com.shms.api.mapper.PatientMapper;
 import com.shms.api.model.patient.Patient;
-import com.shms.api.service.PatientService;
+import com.shms.api.service.EntityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +23,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/patient")
 @Tag(name = "Patient")
+@Slf4j
 public class PatientController {
 
     private final PatientMapper patientMapper;
-    private final PatientService patientService;
+    private final EntityService<Patient, PatientDTO> patientService;
     private final PatientRepository patientRepository;
 
     @Operation(summary = "Create a new patient", description = "Creates a new patient in the system and returns the created patient object.")
@@ -38,7 +40,7 @@ public class PatientController {
     @ResponseStatus(HttpStatus.CREATED)
     public PatientDTO create(@Parameter(description = "Details of the patient to be created", required = true)
                              @RequestBody @Valid PatientDTO patientDTO) {
-        return patientMapper.map(patientService.create(patientDTO));
+        return patientMapper.toDto(patientService.create(patientDTO));
     }
 
     @Operation(
@@ -71,7 +73,7 @@ public class PatientController {
     }
 
     @Operation(
-            summary = "Get all patients",  
+            summary = "Get all patients",
             description = "Returns all available active patients. If there are no active patient an empty array returns."
     )
     @ApiResponses(value = {
@@ -80,6 +82,8 @@ public class PatientController {
     })
     @GetMapping
     public List<PatientDTO> getAll() {
+        log.info("We are going to retrieve all patients");
+        
         return patientMapper.map(patientRepository.findAllByOrderByCreatedAtAsc());
     }
 

@@ -2,23 +2,23 @@ package com.shms.api.service.impl;
 
 import com.shms.api.dao.appointment.AppointmentRepository;
 import com.shms.api.dto.appointment.AppointmentDTO;
+import com.shms.api.dto.doctor.DoctorDTO;
+import com.shms.api.dto.patient.PatientDTO;
 import com.shms.api.exception.ResourceNotFoundException;
 import com.shms.api.model.appointemnt.Appointment;
 import com.shms.api.model.doctor.Doctor;
 import com.shms.api.model.patient.Patient;
-import com.shms.api.service.AppointmentService;
-import com.shms.api.service.DoctorService;
-import com.shms.api.service.PatientService;
+import com.shms.api.service.EntityService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class AppointmentServiceImpl implements AppointmentService {
+public class AppointmentServiceImpl implements EntityService<Appointment, AppointmentDTO> {
 
     private final AppointmentRepository appointmentRepository;
-    private final PatientService patientService;
-    private final DoctorService doctorService;
+    private final EntityService<Patient, PatientDTO> patientService;
+    private final EntityService<Doctor, DoctorDTO> doctorService;
 
     @Override
     public Appointment create(AppointmentDTO appointmentDTO) {

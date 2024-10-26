@@ -1,12 +1,11 @@
 package com.shms.api.controller;
 
 
-
 import com.shms.api.dao.testResults.TestResultRepository;
 import com.shms.api.dto.testResults.TestResultDTO;
 import com.shms.api.mapper.TestResultMapper;
 import com.shms.api.model.testResult.TestResult;
-import com.shms.api.service.TestResultService;
+import com.shms.api.service.EntityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,7 +25,7 @@ import java.util.List;
 public class TestResultsController {
 
     private final TestResultMapper testResultMapper;
-    private final TestResultService testResultService;
+    private final EntityService<TestResult, TestResultDTO> testResultService;
     private final TestResultRepository testResultRepository;
 
     @Operation(summary = "Create a new testResult", description = "Creates a new testResult in the system and returns the created testResult object.")
@@ -38,8 +37,8 @@ public class TestResultsController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TestResultDTO create(@Parameter(description = "Details of the testResult to be created", required = true)
-                                 @RequestBody @Valid TestResultDTO testResultDTO) {
-        return testResultMapper.map(testResultService.create(testResultDTO));
+                                @RequestBody @Valid TestResultDTO testResultDTO) {
+        return testResultMapper.toDto(testResultService.create(testResultDTO));
     }
 
     @Operation(
@@ -95,7 +94,7 @@ public class TestResultsController {
     })
     @GetMapping("/{id}")
     public TestResultDTO getById(@PathVariable("id") String id) {
-        return testResultMapper.map(testResultService.getById(id));
+        return testResultMapper.toDto(testResultService.getById(id));
     }
 
 }
