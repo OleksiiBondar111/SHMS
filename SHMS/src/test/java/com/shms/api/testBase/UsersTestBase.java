@@ -1,31 +1,39 @@
 package com.shms.api.testBase;
 
-import com.shms.api.dto.insurance.InsuranceDTO;
-import com.shms.api.model.insurance.Insurance;
+import com.shms.api.dto.auth.authorities.AuthorityDTO;
+import com.shms.api.dto.auth.authorities.RoleDTO;
+import com.shms.api.dto.auth.users.UserDTO;
+import com.shms.api.enums.Authority;
+import com.shms.api.enums.Role;
+import com.shms.api.model.auth.user.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.MockitoAnnotations;
 
-import java.util.List;
+import java.util.Arrays;
 
-public class InsuranceTestBase {
+public class UsersTestBase {
 
-    protected InsuranceDTO insuranceDTO;
-    protected Insurance insurance;
-    protected List<InsuranceDTO> insuranceDTOList;
-    protected List<Insurance> insuranceList;
+    protected UserDTO userDTO;
+    protected RoleDTO roleDTO;
+    protected AuthorityDTO authorityDTO;
+    protected UserEntity userEntity;
+
 
     @BeforeEach
     public void setUp() {
         // Initialize mock objects and data here
         MockitoAnnotations.openMocks(this);
-        insurance = new Insurance();
-        insurance.setProviderName("ProviderName");
-        insurance.setCoverageDetails("CoverageDetails");
-        insurance.setPolicyNumber("PolicyNumber");
-        insurance.setId("Id");
-        insuranceDTO = new InsuranceDTO(insurance);
-        insuranceDTOList = List.of(insuranceDTO);
-        insuranceList = List.of(insurance);
+        authorityDTO = new AuthorityDTO();
+        authorityDTO.setName(Authority.READ);
+        roleDTO = new RoleDTO();
+        roleDTO.setName(Role.ROLE_USER);
+        roleDTO.setAuthoritiesDTO(Arrays.asList(authorityDTO));
+        userDTO = new UserDTO();
+        userDTO.setFirstName("John");
+        userDTO.setLastName("Doe");
+        userDTO.setEmail("john@doe.com");
+        userDTO.setPassword("password");
+        userDTO.setRoles(Arrays.asList(roleDTO));
         
     }
 

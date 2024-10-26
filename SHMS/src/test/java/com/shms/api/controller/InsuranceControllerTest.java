@@ -57,7 +57,7 @@ public class InsuranceControllerTest extends InsuranceTestBase {
     @Test
     public void shouldCreateInsurance() throws Exception {
         when(insuranceService.create(insuranceDTO)).thenReturn(insurance);
-        when(mapper.map(insurance)).thenReturn(insuranceDTO);
+        when(mapper.toDto(insurance)).thenReturn(insuranceDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/insurance")
                         .contentType(MediaType.APPLICATION_JSON)

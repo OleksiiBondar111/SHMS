@@ -1,10 +1,18 @@
-CREATE TABLE public.rooms
+CREATE TABLE public.authorities
 (
     id           character varying(32) NOT NULL PRIMARY KEY,
-    deleted      timestamp without time zone,
-    created      timestamp without time zone,
-    modified     timestamp without time zone,
-    room_number  character varying(32),
-    room_type    character varying(32),
-    availability boolean
+    name         character varying(32)
+);
+
+
+CREATE TABLE public.users_roles
+(
+    user_id character varying(32) REFERENCES public.users (id) ON DELETE SET NULL,
+    role_id character varying(32) REFERENCES public.roles (id) ON DELETE SET NULL
+);
+
+CREATE TABLE public.roles_authorities
+(
+    role_id             character varying(32) REFERENCES public.roles (id) ON DELETE SET NULL,
+    authority_id      character varying(32) REFERENCES public.authorities (id) ON DELETE SET NULL
 );

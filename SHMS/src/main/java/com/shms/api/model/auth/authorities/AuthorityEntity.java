@@ -1,6 +1,7 @@
 package com.shms.api.model.auth.authorities;
 
-import com.shms.api.enums.Authorities;
+import com.shms.api.dto.auth.authorities.AuthorityDTO;
+import com.shms.api.enums.Authority;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 @Table(name = "authorities")
 @Data
 @NoArgsConstructor
-public class Authority {
+public class AuthorityEntity {
 
     @Id
     @GeneratedValue(generator = "system-uuid", strategy = GenerationType.IDENTITY)
@@ -22,12 +23,16 @@ public class Authority {
 
     @Column(name = "name")
     @Enumerated(EnumType.STRING)
-    private Authorities name;
+    private Authority name;
 
     @ManyToMany(mappedBy = "authorities")
-    private List<Role> roles;
+    private List<RoleEntity> roles;
 
-    public Authority(Authorities name) {
+    public AuthorityEntity(Authority name) {
         this.name = name;
+    }
+
+    public AuthorityEntity(AuthorityDTO authorityDTO) {
+        this.name = authorityDTO.getName();
     }
 }

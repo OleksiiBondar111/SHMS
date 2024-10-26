@@ -1,8 +1,8 @@
 package com.shms.api.dao.auth;
 
-import com.shms.api.model.auth.authorities.RoleEntity;
+import com.shms.api.model.auth.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RolesRepository extends JpaRepository<RoleEntity, String> {
-    RoleEntity findByName(String name);
+public interface UsersRepository extends JpaRepository<UserEntity, String> {
+    UserEntity findByEmail(String email);
 }

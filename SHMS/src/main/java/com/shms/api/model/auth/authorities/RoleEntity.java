@@ -1,20 +1,23 @@
 package com.shms.api.model.auth.authorities;
 
-import com.shms.api.enums.Roles;
-import com.shms.api.model.auth.user.User;
+import com.shms.api.dto.auth.authorities.RoleDTO;
+import com.shms.api.enums.Role;
+import com.shms.api.model.auth.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "roles")
 @Data
 @NoArgsConstructor
-public class Role {
+public class RoleEntity {
 
     @Id
     @GeneratedValue(generator = "system-uuid", strategy = GenerationType.IDENTITY)
@@ -24,18 +27,30 @@ public class Role {
 
     @Column(name = "name")
     @Enumerated(EnumType.STRING)
-    private Roles name;
+    private Role name;
 
     @ToString.Exclude
     @ManyToMany
     @JoinTable(
-            name = "role_authorities",
+            name = "roles_authorities",
             joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")}
     )
-    private List<Authority> authorities;
-    
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    private List<AuthorityEntity> authorities;
 
+    @ManyToMany(mappedBy = "roles")
+    private List<UserEntity> users;
+
+    public RoleEntity(Role name) {
+        this.name = name;
+    }
+
+    public RoleEntity(RoleDTO roleDTO) {
+        this.name = roleDTO.getName();
+        if (!CollectionUtils.isEmpty(roleDTO.getAuthorities())) {
+            this.authorities = roleDTO.getAuthorities().stream()
+                    .map(AuthorityEntity::new).collect(Collectors.toList());
+            ;
+        }
+    }
 }

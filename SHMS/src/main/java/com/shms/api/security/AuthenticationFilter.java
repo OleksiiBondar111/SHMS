@@ -1,2 +1,4 @@
-package com.shms.api.security;public class AuthenticationFilter {
+package com.shms.api.security;
+
+public class AuthenticationFilter{
 }

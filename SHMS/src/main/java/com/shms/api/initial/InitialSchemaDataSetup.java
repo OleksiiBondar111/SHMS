@@ -2,6 +2,9 @@ package com.shms.api.initial;
 
 
 import com.shms.api.dto.appointment.AppointmentDTO;
+import com.shms.api.dto.auth.authorities.AuthorityDTO;
+import com.shms.api.dto.auth.authorities.RoleDTO;
+import com.shms.api.dto.auth.users.UserDTO;
 import com.shms.api.dto.doctor.DoctorDTO;
 import com.shms.api.dto.insurance.InsuranceDTO;
 import com.shms.api.dto.invoice.InvoiceDTO;
@@ -9,6 +12,8 @@ import com.shms.api.dto.medicalRecord.MedicalRecordDTO;
 import com.shms.api.dto.patient.PatientDTO;
 import com.shms.api.dto.payment.PaymentDTO;
 import com.shms.api.dto.testResults.TestResultDTO;
+import com.shms.api.enums.Authority;
+import com.shms.api.enums.Role;
 import com.shms.api.mapper.*;
 import com.shms.api.model.appointemnt.Appointment;
 import com.shms.api.model.doctor.Doctor;
@@ -19,6 +24,7 @@ import com.shms.api.model.patient.Patient;
 import com.shms.api.model.payment.Payment;
 import com.shms.api.model.testResult.TestResult;
 import com.shms.api.service.EntityService;
+import com.shms.api.service.impl.UsersServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +32,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.UUID;
 
 @Component
 @AllArgsConstructor
@@ -49,23 +58,38 @@ public class InitialSchemaDataSetup extends EntitiesInitialization {
     private final PaymentMapper paymentMapper;
     private final EntityService<Invoice, InvoiceDTO> invoiceService;
     private final InvoiceMapper invoiceMapper;
+    private final UsersServiceImpl usersService;
 
     @Transactional
     @EventListener
     public void onApplicationEvent(ApplicationReadyEvent event) {
-    
+
         log.info("From Application Ready Event");
-        for (int i = 0; i < 100; i++) {
-        InsuranceDTO insuranceDTO = insuranceMapper.toDto(insuranceService.create(getRandomInsurance()));
-        PatientDTO patientDTO = patientMapper.toDto(patientService.create(getRandomPatient(insuranceDTO)));
-        DoctorDTO doctorDTO = doctorMapper.toDto(doctorService.create(getRandomDoctor()));
-        AppointmentDTO appointmentDTO = appointmentMapper.toDto(appointmentService.create(getRandomAppointment(doctorDTO, patientDTO)));
-        MedicalRecordDTO medicalRecordDTO = medicalRecordMapper.toDto(medicalRecordService.create(getRandomMedicalRecord(doctorDTO, patientDTO)));
-        testResultMapper.toDto(testResultService.create(generateTestResult(medicalRecordDTO)));
-        InvoiceDTO invoiceDTO = invoiceMapper.toDto(invoiceService.create(generateInvoiceDTO(patientDTO, appointmentDTO)));
-        paymentMapper.toDto(paymentService.create(generatePaymentDTO(invoiceDTO)));            
-        }
+//        for (int i = 0; i < 100; i++) {
+//            InsuranceDTO insuranceDTO = insuranceMapper.toDto(insuranceService.create(getRandomInsurance()));
+//            PatientDTO patientDTO = patientMapper.toDto(patientService.create(getRandomPatient(insuranceDTO)));
+//            DoctorDTO doctorDTO = doctorMapper.toDto(doctorService.create(getRandomDoctor()));
+//            AppointmentDTO appointmentDTO = appointmentMapper.toDto(appointmentService.create(getRandomAppointment(doctorDTO, patientDTO)));
+//            MedicalRecordDTO medicalRecordDTO = medicalRecordMapper.toDto(medicalRecordService.create(getRandomMedicalRecord(doctorDTO, patientDTO)));
+//            testResultMapper.toDto(testResultService.create(generateTestResult(medicalRecordDTO)));
+//            InvoiceDTO invoiceDTO = invoiceMapper.toDto(invoiceService.create(generateInvoiceDTO(patientDTO, appointmentDTO)));
+//            paymentMapper.toDto(paymentService.create(generatePaymentDTO(invoiceDTO)));
+//        }
+        createAdminUser();
     }
 
+    private void createAdminUser() {
+        AuthorityDTO authorityRead = new AuthorityDTO(Authority.READ);
+        AuthorityDTO authorityWrite = new AuthorityDTO(Authority.WRITE);
+        AuthorityDTO authorityDelete = new AuthorityDTO(Authority.DELETE);
+        RoleDTO roleAdminDTO = new RoleDTO(Role.ROLE_ADMIN, Arrays.asList(authorityRead, authorityWrite, authorityDelete));
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName("admin");
+        userDTO.setLastName("admin");
+        userDTO.setUserId(UUID.randomUUID().toString());
+        userDTO.setEmail("admin@shms.com");
+        userDTO.setRoles(Arrays.asList(roleAdminDTO));
+        usersService.create(userDTO);
+    }
 
 }

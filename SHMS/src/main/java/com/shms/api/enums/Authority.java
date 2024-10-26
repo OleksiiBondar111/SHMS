@@ -1,5 +1,5 @@
 package com.shms.api.enums;
 
-public enum Authorities {
+public enum Authority {
     READ, WRITE, DELETE
 }

@@ -1,10 +1,9 @@
 package com.shms.api.service;
 
 
-import com.shms.api.dao.insurance.InsuranceRepository;
-import com.shms.api.exception.ResourceNotFoundException;
-import com.shms.api.model.insurance.Insurance;
-import com.shms.api.testBase.InsuranceTestBase;
+import com.shms.api.model.auth.user.UserEntity;
+import com.shms.api.service.impl.UsersServiceImpl;
+import com.shms.api.testBase.UsersTestBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,50 +13,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class InsuranceServiceTest extends InsuranceTestBase {
+public class UsersServiceTest extends UsersTestBase {
 
     @Autowired
-    private InsuranceService insuranceService;
-
-    @Autowired
-    private InsuranceRepository insuranceRepository;
+    private UsersServiceImpl usersService;
 
     @Test
-    public void shouldCreteAndFetchInsurance() {
-        Insurance saved = insuranceService.create(insuranceDTO);
-        Insurance insurance1 = insuranceService.getById(saved.getId());
-        assertThat(insurance1.getId()).isEqualTo(saved.getId());
+    public void shouldCreteAndFetchUser() {
+        UserEntity saved = usersService.create(userDTO);
+        UserEntity user = usersService.getById(saved.getId());
+        assertThat(user.getId()).isEqualTo(saved.getId());
+        assertThat(user.getRoles().get(0)).isNotNull();
+        assertThat(user.getRoles().get(0).getAuthorities()).isNotEmpty();
     }
 
-    @Test
-    public void shouldUpdateAndFetchInsurance() {
-        Insurance saved = insuranceService.create(insuranceDTO);
-        Insurance insurance1 = insuranceService.getById(saved.getId());
-        insuranceDTO.setPolicyNumber("updateAndFetchInsurance");
-        insuranceService.update(insurance1, insuranceDTO);
-        Insurance insurance2 = insuranceService.getById(saved.getId());
-        assertThat(insurance2.getPolicyNumber()).isEqualTo("updateAndFetchInsurance");
-    }
-
-    @Test
-    public void shouldDeleteFetchInsurance() {
-        Insurance saved = insuranceService.create(insuranceDTO);
-        Insurance insurance1 = insuranceService.getById(saved.getId());
-        insuranceRepository.deleteById(insurance1.getId());
-        try {
-            insuranceService.getById(insurance1.getId());
-        } catch (Exception ex) {
-            assertThat(ex).hasMessage("Entity is not found");
-        }
-    }
-            @Test
-    public void shouldReturnResourceNotFoundException() {
-        try {
-            insuranceService.getById("shouldReturnResourceNotFoundException");
-        } catch (ResourceNotFoundException ex) {
-            assertThat(ex).hasMessage("Entity is not found");
-        }
-    }
 
 
 }

@@ -4,6 +4,7 @@ package com.shms.api.service;
 import com.shms.api.dao.insurance.InsuranceRepository;
 import com.shms.api.exception.ResourceNotFoundException;
 import com.shms.api.model.insurance.Insurance;
+import com.shms.api.service.impl.InsuranceServiceImpl;
 import com.shms.api.testBase.InsuranceTestBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class InsuranceServiceTest extends InsuranceTestBase {
 
     @Autowired
-    private InsuranceService insuranceService;
+    private InsuranceServiceImpl insuranceService;
 
     @Autowired
     private InsuranceRepository insuranceRepository;
