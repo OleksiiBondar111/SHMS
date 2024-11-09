@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../services/auth.service";
+import {Observable} from "rxjs";
+import {PatientDTO} from "../patient/patient-model";
+import {logout} from "../auth/store/actions/auth.actions";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-dashboard',
@@ -8,7 +12,10 @@ import {AuthService} from "../services/auth.service";
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  patients$: Observable<PatientDTO[]> = this.authService.getAllPatients();
+
+  constructor(private authService: AuthService, private store: Store) {
+  }
 
   ngOnInit(): void {
   }
@@ -18,4 +25,5 @@ export class DashboardComponent implements OnInit {
       .then(() => console.log("Test Interceptor"))
       .catch(() => console.log("Error happened"))
   }
+
 }

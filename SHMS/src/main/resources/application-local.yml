@@ -1,4 +1,6 @@
 spring:
+  security:
+    
   application:
     name: ${APPLICATION_NAME}
   datasource:

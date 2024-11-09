@@ -1,0 +1,25 @@
+.main-header {
+  width: 100%;
+  background-color: #40c3eb;
+  padding: 8px 16px;
+}
+
+.main-header > div {
+  display: inline-block;
+}
+
+.main-nav {
+  display: inline-block;
+  text-align: right;
+  width: calc(100% - 80px);
+}
+
+.main-nav__item {
+  display: inline-block;
+}
+
+.main-nav__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

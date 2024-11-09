@@ -13,12 +13,14 @@ import {EffectsModule} from "@ngrx/effects";
 import {AuthEffects} from "./auth/store/effects/auth.effects";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import { NavbarComponent } from './shared/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

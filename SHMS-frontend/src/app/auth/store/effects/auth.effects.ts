@@ -2,15 +2,16 @@ import {Injectable} from "@angular/core";
 import {AuthService} from "../../../services/auth.service";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {login, loginFailure, loginSuccess, logout} from "../actions/auth.actions";
-import {mergeMap, tap} from "rxjs/operators";
+import {catchError, exhaustMap, map, mergeMap, switchMap, take, tap} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {AutoLogoutService} from "../../../services/auto-logout.service";
+import {from, of} from "rxjs";
 
 @Injectable()
 export class AuthEffects {
   constructor(private actions$: Actions,
               private authService: AuthService,
-                  private autoLogoutService: AutoLogoutService,
+              private autoLogoutService: AutoLogoutService,
               private router: Router) {
   }
 
@@ -18,37 +19,41 @@ export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(login),
-      mergeMap(({username, password}) =>
-        // this.authService.login(username, password).pipe(
-        //   map((authObj) => loginSuccess({token: authObj.access_token}),
-        //     catchError((error) => of(loginFailure({error})))
-        //   )
-        this.authService.login(username, password)
-          .then((authObj) => loginSuccess({token: authObj.access_token}))
-          .catch((error) => loginFailure({error}))
+      tap((l)=>console.log("actions$: ",l)),
+      // take(1),
+      switchMap(action =>
+        from(this.authService.authenticate(action.username, action.password)).pipe(
+          tap((r)=>console.log("login$", r)),
+          map(response => loginSuccess({ access_token: response.access_token })),
+          catchError(error => of(loginFailure({ error: error.message })))
+        )
       )
-    ));
-
-  loginSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(loginSuccess),
-        tap(() => {
-          // this.autoLogoutService.startMonitoring();
-          this.router.navigate(['/dashboard']); // Navigate to the dashboard on successful login
-        })
-      ),
-    {dispatch: false}
+    )
   );
 
-    logOut$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(logout),
-        tap(() => {
-          this.router.navigate(['/login']); // Navigate to the dashboard on successful login
-        })
-      ),
-    {dispatch: false}
-  );
-}
+        loginSuccess$ = createEffect(
+          () =>
+            this.actions$.pipe(
+              ofType(loginSuccess),
+              take(1),
+              tap(() => {
+                // this.autoLogoutService.startMonitoring();
+                console.log("login success");
+                this.router.navigate(['/dashboard']); // Navigate to the dashboard on successful login
+              })
+            ),
+          {dispatch: false}
+        );
+
+        logOut$ = createEffect(
+          () =>
+            this.actions$.pipe(
+              ofType(logout),
+              tap(() => {
+                    console.log("logOut$ success");
+                this.router.navigate(['/login']); // Navigate to the dashboard on successful login
+              })
+            ),
+          {dispatch: false}
+        );
+      }

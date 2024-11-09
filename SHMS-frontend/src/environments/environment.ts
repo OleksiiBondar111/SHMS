@@ -3,7 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  URL: "http://localhost:9090/api",
+  mock: {
+    rest: {
+      patientListMock: require('../assets/mock/patientList.json'),
+    }
+  }
 };
 
 /*

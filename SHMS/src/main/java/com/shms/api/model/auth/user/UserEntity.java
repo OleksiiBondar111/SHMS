@@ -1,27 +1,25 @@
 package com.shms.api.model.auth.user;
 
 
-import com.shms.api.dto.auth.users.UserDTO;
-import com.shms.api.model.TrackedEntity;
-import com.shms.api.model.auth.authorities.RoleEntity;
+import com.shms.api.model.auth.Role;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.util.CollectionUtils;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.Collection;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "users")
 @Data
 @NoArgsConstructor
-public class UserEntity extends TrackedEntity {
+@AllArgsConstructor
+@Builder
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(generator = "system-uuid", strategy = GenerationType.IDENTITY)
@@ -29,39 +27,53 @@ public class UserEntity extends TrackedEntity {
     @Column(name = "id", nullable = false, updatable = false)
     protected String id;
 
-    @Column(nullable = false, name = "user_id")
-    private String userId;
-
-    @Column(nullable = false, name = "firstName")
-    private String firstName;
-
-    @Column(nullable = false, name = "last_name")
-    private String lastName;
-
-    @Column(nullable = false, name = "email")
+    @Column(name = "first_name", nullable = false)
+    private String firstname;
+    
+    @Column(name = "last_name", nullable = false)
+    private String lastname;
+    
+    @Column(name = "email", nullable = false)
     private String email;
+    
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    @Column(nullable = false, name = "encrypted_password")
-    private String encryptedPassword;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    @ToString.Exclude
-    @ManyToMany
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
-    )
-    private List<RoleEntity> roles;
-
-    public UserEntity(UserDTO userDTO) {
-        this.userId = UUID.randomUUID().toString();
-        this.firstName = userDTO.getFirstName();
-        this.lastName = userDTO.getLastName();
-        this.email = userDTO.getEmail();
-        this.encryptedPassword = userDTO.getEncryptedPassword();
-        if (!CollectionUtils.isEmpty(userDTO.getRoles())) {
-            this.roles = userDTO.getRoles().stream().map(RoleEntity::new).collect(Collectors.toList());
-        }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthorities();
     }
 
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

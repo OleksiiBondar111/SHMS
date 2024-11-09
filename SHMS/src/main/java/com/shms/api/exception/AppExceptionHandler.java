@@ -1,5 +1,6 @@
 package com.shms.api.exception;
 
+import io.jsonwebtoken.JwtException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,11 @@ public class AppExceptionHandler {
 
         ErrorMessage errorMessage = new ErrorMessage(errorMessageDescription, new Date());
         return new ResponseEntity<>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(value = {JwtException.class})
+    public ResponseEntity<Object> handleJwtException(JwtException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
     }
 
 }

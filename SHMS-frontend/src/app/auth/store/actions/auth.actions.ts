@@ -8,12 +8,12 @@ export const login = createAction(
 
 export const loginSuccess = createAction(
   '[Auth] Login Success',
-  props<{ token: string }>()
+  props<{ access_token: string }>()
 );
 
 export const loginFailure = createAction(
   '[Auth] Login Failure',
-  props<{ error: string }>()
+  props<{ error: any }>()
 );
 
 export const logout = createAction('[Auth] Logout');
