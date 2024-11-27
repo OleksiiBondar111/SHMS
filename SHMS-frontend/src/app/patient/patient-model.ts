@@ -1,6 +1,6 @@
 interface InsuranceDTO extends EntityDTO {
   providerName?: string;
-  policyName?: string;
+  policyName: string;
 }
 
 export interface PatientDTO extends EntityDTO {

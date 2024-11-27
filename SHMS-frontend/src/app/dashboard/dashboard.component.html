@@ -1,26 +1,5 @@
 <app-navbar></app-navbar>
-<button type="submit" (click)="onTest()">Test</button>
-<div *ngIf="patients$ | async as patients; else loading">
-  <ul>
-    <li *ngFor="let patient of patients">
-      <div><span>Name:</span> {{ patient.firstName }}</div>
-      <div><span>Surname:</span> {{ patient.lastName }}</div>
-      <div><span>Email:</span> {{ patient.email }}</div>
-      <div><span>Phone:</span> {{ patient.phone }}</div>
-      <div><span>Address:</span> {{ patient.address }}</div>
-      <div><span>Date of birth:</span> {{ patient.dob }}</div>
-      <div><span>Gender:</span> {{ patient.gender }}</div>
-      <div><span>Image:</span>{{ patient.imageId }}</div>
-      <div><span>Modified:</span> {{ patient.lastModified }}</div>
-      <div><span>Created:</span> {{ patient.createdAt }}</div>
-      <div><span>Id:</span> {{ patient.id }}</div>
-      <div><span>Policy:</span> {{ patient.insurance.policyName }}</div>
-      <div><span>Insurance:</span> {{ patient.insurance.providerName }}</div>
-      <div><span>Insurance number:</span> {{ patient.insurance.id }}</div>
-    </li>
-  </ul>
-</div>
-
-<ng-template #loading>
-  <p>Loading clients...</p>
-</ng-template>
+<app-product></app-product>
+<app-plan></app-plan>
+<app-feature></app-feature>
+<app-footer></app-footer>

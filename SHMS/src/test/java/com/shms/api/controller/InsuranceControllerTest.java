@@ -2,16 +2,25 @@ package com.shms.api.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shms.api.auth.TokenRepository;
+import com.shms.api.configuration.JwtAuthenticationFilter;
+import com.shms.api.configuration.JwtService;
 import com.shms.api.dao.insurance.InsuranceRepository;
+import com.shms.api.dto.insurance.InsuranceDTO;
 import com.shms.api.mapper.InsuranceMapper;
+import com.shms.api.model.insurance.Insurance;
+import com.shms.api.service.EntityService;
 import com.shms.api.service.InsuranceService;
 import com.shms.api.testBase.InsuranceTestBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -24,6 +33,7 @@ import static org.mockito.Mockito.when;
 
 @WebMvcTest(InsuranceController.class)
 @ActiveProfiles("test")
+@AutoConfigureMockMvc(addFilters = false)
 public class InsuranceControllerTest extends InsuranceTestBase {
 
     @Autowired
@@ -33,13 +43,19 @@ public class InsuranceControllerTest extends InsuranceTestBase {
     private InsuranceMapper mapper;
 
     @MockBean
-    private InsuranceService insuranceService;
+    private EntityService<Insurance, InsuranceDTO> insuranceService;
 
     @MockBean
     private InsuranceRepository insuranceRepository;
 
     @Autowired
     ObjectMapper objectMapper;
+
+    @MockBean
+    JwtService jwtService;
+    
+    @MockBean
+    TokenRepository tokenRepository;
 
     @Test
     public void shouldReturnInsuranceList() throws Exception {

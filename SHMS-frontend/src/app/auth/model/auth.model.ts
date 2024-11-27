@@ -14,3 +14,8 @@ export interface AuthenticationRequest {
 export interface AuthenticationResponse {
   access_token: string;
 }
+
+export interface AD {
+  id: string;
+  name: string;
+}

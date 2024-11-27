@@ -33,9 +33,9 @@ export class AuthService {
   }
 
   authenticate(email: string, password: string) {
-    if (!environment.production) {
-      return of({access_token: '123'});
-    }
+    // if (!environment.production) {
+    //   return of({access_token: '123'});
+    // }
 
     return this.http.post<AuthenticationResponse>(`${this.apiUrl}/auth/authenticate`, {
       email,

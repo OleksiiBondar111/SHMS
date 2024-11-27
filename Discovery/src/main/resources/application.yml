@@ -3,3 +3,8 @@ spring:
     name: discovery-service
 server:
   port: 8761
+
+eureka:
+  client:
+    register-with-eureka: false # Eureka server does not register itself
+    fetch-registry: false # Eureka server does not fetch other registries  

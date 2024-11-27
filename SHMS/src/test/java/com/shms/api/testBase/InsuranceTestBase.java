@@ -1,9 +1,11 @@
 package com.shms.api.testBase;
 
+import com.shms.api.configuration.JwtService;
 import com.shms.api.dto.insurance.InsuranceDTO;
 import com.shms.api.model.insurance.Insurance;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 

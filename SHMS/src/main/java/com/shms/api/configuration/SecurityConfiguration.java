@@ -46,7 +46,7 @@ public class SecurityConfiguration {
         http.cors(cors -> cors.configurationSource(request -> {
 
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://your-frontend-domain.com")); // Allow specific origins
+                    config.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://shms-service:4200", "https://your-frontend-domain.com")); // Allow specific origins
                     config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
                     config.setAllowCredentials(true);
