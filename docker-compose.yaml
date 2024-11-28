@@ -39,6 +39,8 @@ services:
       - POSTGRES_DB=shms_db
     ports:
       - "5432:5432"
+    volumes:
+      - D:/Work/Development/SHMS/:/var/lib/postgresql/data 
   
   discovery-service:
     build:
