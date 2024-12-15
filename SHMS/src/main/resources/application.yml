@@ -90,3 +90,13 @@ eureka:
       defaultZone: http://discovery-service:8761/eureka
     register-with-eureka: true # Indicates the service should register itself with Eureka
     fetch-registry: true # Indicates the service should fetch the Eureka registry
+    enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env 
+  endpoint:
+    health:
+      show-details: always    

@@ -35,6 +35,8 @@ public class SecurityConfiguration {
             "/configuration/ui",
             "/configuration/security",
             "/swagger-ui/**",
+            "/actuator/**",
+            "/host-info",
             "/webjars/**",
             "/swagger-ui.html"};
     private final JwtAuthenticationFilter jwtAuthFilter;
@@ -46,7 +48,7 @@ public class SecurityConfiguration {
         http.cors(cors -> cors.configurationSource(request -> {
 
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://shms-service:4200", "https://your-frontend-domain.com")); // Allow specific origins
+                    config.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://shms-service:4200", "https://bondars.click", "https://www.bondars.click", "http://bondars.click", "http://www.bondars.click","http://shms-frontend-lb-2093106041.eu-central-1.elb.amazonaws.com")); // Allow specific origins
                     config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
                     config.setAllowCredentials(true);
