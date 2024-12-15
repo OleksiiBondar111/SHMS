@@ -1,6 +1,14 @@
 version: 0.2
 
 phases:
+  install:
+    commands:
+      - echo Installing Gradle...
+      - curl -s https://get.sdkman.io | bash
+      - source ~/.sdkman/bin/sdkman-init.sh
+      - sdk install gradle
+      - gradle --version
+      - chmod +x gradlew
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
