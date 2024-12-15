@@ -18,7 +18,8 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - chmod +x SHMS/gradlew  # Make sure gradlew has execute permissions
+      - source $HOME/.sdkman/bin/sdkman-init.sh  # Re-source SDKMAN in this phase
+      - chmod +x SHMS/gradlew  # Ensure gradlew has execute permissions
       - ./SHMS/gradlew clean build -x test  # Run Gradle build
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
@@ -31,5 +32,6 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+
 artifacts:
-    files: imagedefinitions.json
+  files: imagedefinitions.json
