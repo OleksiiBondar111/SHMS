@@ -3,12 +3,11 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo Installing Gradle...
+      - echo Installing SDKMAN...
       - curl -s https://get.sdkman.io | bash
-      - source ~/.sdkman/bin/sdkman-init.sh
-      - sdk install gradle
-      - gradle --version
-      - chmod +x gradlew
+      - source $HOME/.sdkman/bin/sdkman-init.sh  # Initialize SDKMAN in the current shell
+      - sdk install gradle  # Install Gradle using SDKMAN
+      - gradle --version  # Verify the installation of Gradle
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -19,7 +18,8 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - SHMS/gradlew clean build -x test
+      - chmod +x SHMS/gradlew  # Make sure gradlew has execute permissions
+      - ./SHMS/gradlew clean build -x test  # Run Gradle build
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest olexiybondar9685/shms-service
