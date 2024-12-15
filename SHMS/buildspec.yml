@@ -11,7 +11,6 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - source $HOME/.sdkman/bin/sdkman-init.sh  # Re-source SDKMAN in this phase
       - chmod +x SHMS/gradlew  # Ensure gradlew has execute permissions
       - ./SHMS/gradlew clean build -x test  # Run Gradle build
       - echo Building the Docker image...
