@@ -19,6 +19,8 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
+      - echo "Authenticating with Docker Hub..."
+      - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
       - echo Pushing the Docker images...
       - docker push olexiybondar9685/shms-service
       - echo Writing image definitions file...
