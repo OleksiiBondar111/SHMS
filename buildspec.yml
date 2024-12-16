@@ -12,7 +12,7 @@ phases:
     commands:
       - echo Build started on `date`
       - chmod +x SHMS/gradlew  # Ensure gradlew has execute permissions
-      - ./SHMS/gradlew clean build -x test  # Run Gradle build
+      - .gradlew clean build -x test  # Run Gradle build
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest olexiybondar9685/shms-service
