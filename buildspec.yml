@@ -14,15 +14,15 @@ phases:
       - chmod +x gradlew  # Ensure gradlew has execute permissions
       - ./gradlew clean build -x test  # Run Gradle build
       - echo Building the Docker image...
-      - docker build -t shms-service .
-      - docker tag shms-service olexiybondar9685/shms-service
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest olexiybondar9685/$REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
       - echo "Authenticating with Docker Hub..."
       - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
       - echo Pushing the Docker images...
-      - docker push olexiybondar9685/shms-service
+      - docker push olexiybondar9685/$REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 
