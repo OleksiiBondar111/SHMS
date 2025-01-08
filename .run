@@ -7,3 +7,5 @@ create database shms_db with owner shms_dev;
 
 //Sonar
 docker run --rm -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
+
+-test row 1
