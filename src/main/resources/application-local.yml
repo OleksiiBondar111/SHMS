@@ -50,6 +50,11 @@ spring:
 
 server:
   port: ${APPLICATION_PORT}
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: classpath:ssl/javabegin_ssl.p12
+    key-store-password: rootroot
 
 logging:
   level:

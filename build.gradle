@@ -104,3 +104,10 @@ jacocoTestReport {
 tasks.withType(JavaCompile) {
     options.annotationProcessorPath = configurations.annotationProcessor
 }
+
+task firstTask{
+    println 'Gradle Custom Task Test!!!!!'
+    doFirst() {
+        println 'doFirst!!'
+    }
+}
